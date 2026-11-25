@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SchemaGuard — Structured data, validated properly.</title>
+<meta name="description" content="Extract JSON-LD, microdata and RDFa from a page, validate syntax, check required properties per schema type, and spot duplicate schema blocks.">
+<meta name="keywords" content="schema validator, JSON-LD checker, structured data">
+<meta name="author" content="Sajidur">
+<meta property="og:title" content="SchemaGuard — Structured data, validated properly.">
+<meta property="og:description" content="Extract JSON-LD, microdata and RDFa from a page, validate syntax, check required properties per schema type, and spot duplicate schema blocks.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alltoolfree.site">
+<meta name="twitter:card" content="summary">
+<meta name="robots" content="index, follow">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SchemaGuard","applicationCategory":"DeveloperApplication","operatingSystem":"Web","author":{"@type":"Person","name":"Sajidur","url":"https://alltoolfree.site"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"license":"https://opensource.org/licenses/MIT"}</script>
+<style>
+:root{--primary:#db2777;--accent:#fce7f3;--bg:#f8fafc;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--card:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+header{background:var(--card);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+.logo{width:38px;height:38px;border-radius:10px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px}
+header h1{font-size:19px;margin:0}header .tag{color:var(--muted);font-size:13px}
+header nav{margin-left:auto;display:flex;gap:12px;align-items:center;font-size:14px}
+header nav a{color:var(--ink);text-decoration:none}header nav a:hover{color:var(--primary)}
+main{max-width:1020px;margin:0 auto;padding:22px 16px 40px}
+.hero{background:var(--accent);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:18px}
+.hero h2{margin:0 0 6px;font-size:22px}.hero p{margin:0;color:#334155}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}}
+button{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 14px;cursor:pointer;font-size:14px}
+button.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+button:hover{filter:brightness(.96)}
+input,select,textarea{border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:14px;font-family:inherit;background:#fff}
+textarea{width:100%}input[type=file]{border:none;padding:4px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+tr.bad td{background:#fef2f2}.muted{color:var(--muted);font-size:13px}.ok{color:#15803d;font-weight:600}.warn{color:#b45309;font-weight:600}
+.issue{border-left:4px solid #f59e0b;background:#fffbeb;padding:10px 12px;border-radius:8px;margin-bottom:8px}
+.issue.error{border-color:#dc2626;background:#fef2f2}.issue.info{border-color:#64748b;background:#f8fafc}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0}
+.stats>div{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px;text-align:center}
+.stats b{display:block;font-size:22px}.stats span{font-size:12px;color:var(--muted)}
+.shot{max-width:100%;border:1px solid var(--line);border-radius:8px}
+canvas.shot{width:100%;height:auto}
+pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:8px;overflow:auto;font-size:12.5px;white-space:pre-wrap}
+code{background:#f1f5f9;padding:1px 5px;border-radius:5px;font-size:13px}
+.imgWrap{position:relative;display:inline-block;max-width:100%}.imgWrap img{max-width:100%;border-radius:8px;display:block}
+.pin{position:absolute;width:22px;height:22px;border-radius:50%;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transform:translate(-50%,-50%);cursor:pointer}
+.traceRow{display:flex;gap:8px;align-items:center;margin:4px 0;font-size:13px}.tName{min-width:150px}.tBar{height:10px;border-radius:5px;display:inline-block}
+footer{border-top:1px solid var(--line);background:var(--card);padding:20px;text-align:center;font-size:14px;color:var(--muted)}
+footer a{color:var(--primary);text-decoration:none;margin:0 6px}footer a:hover{text-decoration:underline}
+body.client-view .admin-only{display:none}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;display:none;z-index:50}
+dialog{border:1px solid var(--line);border-radius:12px;padding:20px;max-width:420px}
+</style>
+</head>
+<body class="explorer">
+<header>
+<div class="logo">S</div>
+<div><h1>SchemaGuard</h1><div class="tag">Structured data, validated properly. · v1.0.0</div></div>
+<nav><a href="#app">App</a><a href="#how">How it works</a><button id="aboutBtn">About</button></nav>
+</header>
+<main id="app">
+<div class="hero"><h2>Structured data, validated properly.</h2><p>Extract JSON-LD, microdata and RDFa from a page, validate syntax, check required properties per schema type, and spot duplicate schema blocks.</p></div>
+<div class="panel"><label>Paste JSON-LD or full page HTML<textarea id="schemaText" rows="8" placeholder='{"@context":"https://schema.org","@type":"Article",…}'></textarea></label><br><button id="validateBtn" class="primary">Validate schema</button> <button id="sampleBtn">Load sample</button> <button id="exportBtn">Export report</button><p id="dupes" class="muted"></p></div>
+<div id="results"></div>
+<div class="panel" id="how"><h3>How it works</h3><p>Paste JSON-LD or a full page's HTML. SchemaGuard extracts every schema block, validates its JSON, checks required properties for its type, and flags duplicates.</p><p class="muted">Data is stored only in your browser (localStorage) unless a feature explicitly fetches a URL or API you enter. Run <code>npm start</code> for the real server — live checks run server-side and history is saved on disk. Opening <code>index.html</code> directly still works in browser-only mode.</p></div>
+</main>
+<footer>
+<p><strong>SchemaGuard v1.0.0</strong> · Created by <a href="https://alltoolfree.site" target="_blank" rel="noopener">Sajidur</a> · Open Source (MIT)</p>
+<p><a href="https://alltoolfree.site" target="_blank" rel="noopener">AllToolFree ↗</a> <a href="https://alltoolfree.site" target="_blank" rel="noopener">More free tools ↗</a> <a href="https://github.com/sajidurop/schemaguard" target="_blank" rel="noopener">View source on GitHub ↗</a> <a href="https://alltoolfree.site" target="_blank" rel="noopener">Discover AllToolFree ↗</a></p>
+<p class="muted">Self-hostable. Works offline except for features that fetch a URL or API you supply.</p>
+</footer>
+<dialog id="aboutDlg"><h3>About SchemaGuard</h3><p>Extract JSON-LD, microdata and RDFa from a page, validate syntax, check required properties per schema type, and spot duplicate schema blocks.</p><p>Created by <a href="https://alltoolfree.site" target="_blank" rel="noopener">Sajidur</a></p><p><a href="https://alltoolfree.site" target="_blank" rel="noopener">Discover AllToolFree ↗</a> — more free tools by the same creator.</p><p class="muted">MIT License. Version 1.0.0.</p><button id="closeDlg">Close</button></dialog>
+<div id="toast"></div>
+<script>
+const BRAND={creator:"Sajidur",website:"https://alltoolfree.site",repository:"https://github.com/sajidurop/schemaguard",product:"SchemaGuard",version:"1.0.0"};
+const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];
+function save(k,v){try{localStorage.setItem("schemaguard:"+k,JSON.stringify(v))}catch(e){}}
+function load(k,d){try{const v=JSON.parse(localStorage.getItem("schemaguard:"+k));return v==null?d:v}catch(e){return d}}
+function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:type||"application/json"}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)}
+function toast(m){const t=$("#toast");t.textContent=m;t.style.display="block";setTimeout(()=>t.style.display="none",2600)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+document.getElementById("aboutBtn").onclick=()=>document.getElementById("aboutDlg").showModal();
+document.getElementById("closeDlg").onclick=()=>document.getElementById("aboutDlg").close();
+
+const REQUIRED={Article:['headline','author','datePublished'],Product:['name','offers'],LocalBusiness:['name','address'],FAQPage:['mainEntity'],Recipe:['name','recipeIngredient'],JobPosting:['title','hiringOrganization'],Event:['name','startDate'],BreadcrumbList:['itemListElement'],Organization:['name'],WebSite:['name','url']};
+function validate(){
+ const raw=$('#schemaText').value.trim();if(!raw){toast('Paste JSON-LD or page HTML');return}
+ let blocks=[];
+ if(raw.trim().startsWith('<')){const doc=new DOMParser().parseFromString(raw,'text/html');blocks=[...doc.querySelectorAll('script[type="application/ld+json"]')].map(s=>s.textContent)}
+ else blocks=[raw];
+ const out=[];
+ blocks.forEach((b,i)=>{
+  try{const j=JSON.parse(b);const items=Array.isArray(j)?j:[j];
+   items.forEach(it=>{const type=it['@type']||'Unknown';const req=REQUIRED[type]||[];const missing=req.filter(k=>!(k in it));
+    out.push({block:i+1,type,valid:missing.length===0,missing,keys:Object.keys(it)});});
+  }catch(e){out.push({block:i+1,type:'—',valid:false,missing:[],error:'Invalid JSON: '+e.message})}
+ });
+ const dupes={};out.forEach(o=>{dupes[o.type]=(dupes[o.type]||0)+1});
+ $('#results').innerHTML=out.map(o=>`<div class="panel"><b>${esc(o.type)}</b> (block ${o.block}) — ${o.valid?'<span class="ok">VALID</span>':'<span class="warn">ISSUES</span>'}${o.error?'<br>'+esc(o.error):''}${o.missing.length?'<br>Missing required: '+esc(o.missing.join(', ')):''}<br>Properties: ${esc(o.keys?o.keys.join(', '):'—')}</div>`).join('')||'<p>No schema blocks found.</p>';
+ const dupList=Object.entries(dupes).filter(([,n])=>n>1).map(([t,n])=>t+' ×'+n);
+ $('#dupes').textContent=dupList.length?'Duplicate schema types: '+dupList.join(', '):'No duplicate schema types.';
+ const h=load('checks',[]);h.unshift({at:new Date().toISOString(),blocks:out.length,valid:out.filter(o=>o.valid).length});save('checks',h.slice(0,30));
+}
+$('#validateBtn').onclick=validate;
+$('#sampleBtn').onclick=()=>{$('#schemaText').value=JSON.stringify({"@context":"https://schema.org","@type":"Article","headline":"Example article","author":{"@type":"Person","name":"Sajidur"},"datePublished":"2026-11-25"},null,2)};
+$('#exportBtn').onclick=()=>download('schema-report.json',JSON.stringify({checks:load('checks',[])},null,2));
+
+
+/* __REAL_SERVER_WIRING__ */
+async function __api(path, body){
+  try{
+    const r = await fetch(path, {method: body ? 'POST' : 'GET', headers: {'Content-Type':'application/json'}, body: body ? JSON.stringify(body) : undefined});
+    if(!r.ok) return null;
+    return await r.json();
+  }catch(e){ return null; }
+}
+let __serverUp = false;
+__api('/api/health').then(h => {
+  if(h && h.ok){
+    __serverUp = true;
+    const nav = document.querySelector('header nav');
+    if(nav){ const s=document.createElement('span'); s.textContent='● Live server'; s.style.cssText='color:#15803d;font-weight:600;font-size:13px'; nav.prepend(s); }
+  }
+});
+function __on(btnId, fn){
+  document.addEventListener('click', async (e) => {
+    const t = e.target && e.target.closest ? e.target.closest('#'+btnId) : null;
+    if(t && __serverUp){ e.stopPropagation(); e.preventDefault(); await fn(); }
+  }, true);
+}
+function __v(id){ const el=document.getElementById(id); return el ? el.value : ''; }
+
+__on('validateBtn', async ()=>{
+  const out=await __api('/api/check',{text:__v('schemaText')});
+  const box=document.getElementById('results'); if(!box) return;
+  if(!out || out.error){ box.innerHTML='<div class="issue error">'+esc(out?out.error:'Server check failed')+'</div>'; return; }
+  box.innerHTML=out.results.map(r=>r.error?'<div class="issue error">'+esc(r.error)+'</div>':'<div class="issue '+(r.ok?'info':'')+'"><b>'+esc(r.type)+'</b> — '+(r.ok?'Valid. ':'Missing: '+r.missing.map(esc).join(', '))+'<br><span class="muted">Fields: '+r.fields.map(esc).join(', ')+'</span></div>').join('');
+});
+
+</script>
+</body>
+</html>
